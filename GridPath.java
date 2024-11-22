@@ -1,6 +1,9 @@
 public class GridPath {
     /** Initialized in the constructor with distinct values that never change */
     private int[][] grid;
+    public GridPath(int[][] grid){
+        this.grid = grid;
+    }
 
     /**
      * Returns the Location representing a neighbor of the grid element at row and
@@ -13,7 +16,9 @@ public class GridPath {
      */
     public Location getNextLoc(int row, int col) {
         /* to be implemented in part (a) */
-        return null;
+        if(col==grid[row].length-1) return new Location(row+1,col);
+        else if(row==grid.length-1) return new Location(row,col+1);
+        else return grid[row+1][col]<grid[row][col+1] ? new Location(row+1,col) :new Location(row,col+1);
     }
 
     /**
@@ -26,7 +31,13 @@ public class GridPath {
      * grid.
      */
     public int sumPath(int row, int col) {
-        /* to be implemented in part (b) */
-        return row;
+        int sum = 0;
+        while (row!= grid.length&&col!=grid[0].length){
+            sum+=grid[row][col];
+            Location loc = getNextLoc(row,col);
+            row = loc.getRow();
+            col = loc.getCol();
+        }
+        return sum;
     }
 }
